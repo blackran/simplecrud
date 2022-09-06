@@ -18,3 +18,5 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 # simplecrud
+
+docs swagger: localhost:3000/api
