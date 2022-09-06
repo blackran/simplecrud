@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Device {
+  dvc_id           Int      @id @default(autoincrement())
+  dvc_name         String   @unique
+  dvc_description  String
+  dvc_created_at   DateTime  @default(now()) @db.Timestamptz(3)
+  dvc_updated_at   DateTime  @updatedAt @db.Timestamptz(3)
+  device_action    DeviceAction[]
+  user_user_id     Int?
+  user             User?   @relation(fields: [user_user_id], references: [user_id])
+  state_state_id   Int?
+  state            State?   @relation(fields: [state_state_id], references: [state_id])
+}
+
+model DeviceAction {
+  dact_id          Int      @id @default(autoincrement())
+  dact_name        String   @unique
+  dact_description String
+  dact_date        String
+  dact_created_at  DateTime  @default(now()) @db.Timestamptz(3)
+  dact_updated_at  DateTime  @updatedAt @db.Timestamptz(3)
+  device_dvc_id    Int?
+  device           Device?   @relation(fields: [device_dvc_id], references: [dvc_id])
+}
+
+model User {
+  user_id        Int     @id @default(autoincrement())
+  user_name      String?
+  user_lastname  String?
+  user_email     String  @unique
+  user_password  String
+  user_actived   Int @default(value: 0)
+  device         Device[]
+}
+
+model State {
+  state_id       Int          @id @default(autoincrement())
+  state_name     String
+  device         Device[]
+}
+
