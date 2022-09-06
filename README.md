@@ -16,7 +16,8 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# docs swagger
+http://localhost:3000/api
 ```
 # simplecrud
-
-docs swagger: localhost:3000/api
